@@ -13,7 +13,6 @@ export function generateUCFile(
 		"\tlocal int i;",
 		"",
 		"\ti = 0;",
-		"",
 		"\tsink.length = 0;",
 		`\tsink.length = ${defs.length};`,
 		"",
@@ -25,11 +24,16 @@ export function generateUCFile(
 		"}",
 		"",
 		"function string GetAuthor(){",
-		`\treturn ${author || '"Unknown"'};`,
+		`\treturn "${author || "Unknown"}";`,
 		"}",
 		"",
 	];
 	return lines.join("\n");
+}
+
+export function generateTXTFile(defs: string[]): string {
+	const lines = defs.map((d) => `SpawnCycleDefs=${d}`);
+	return `${lines.join("\n")}\n`;
 }
 
 function getTodayString(): string {

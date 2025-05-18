@@ -1,4 +1,5 @@
 export interface Config {
-	inputDir: string;
-	outputDir: string;
+	txtDir: string;
+	ucDir: string;
+	combinedClassNameStyle: boolean;
 }
