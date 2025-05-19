@@ -1,19 +1,11 @@
-import {
-	type WriteFileOptions,
-	mkdirSync,
-	readFileSync,
-	writeFileSync,
-} from "node:fs";
+import { type WriteFileOptions, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { isObject, toBoolean, toString as toStr } from "@asp1020/type-utils";
 import type { Config } from "../domain/Config";
 import { GameLength } from "../domain/GameLength";
 import { throwInvalidParameterError } from "../domain/errorHandler";
 import { generateTXTFile, generateUCFile } from "./generator";
-import {
-	parseSpawnCycleDefsFromTXTFile,
-	parseSpawnCycleDefsFromUCFile,
-} from "./parser";
+import { parseSpawnCycleDefsFromTXTFile, parseSpawnCycleDefsFromUCFile } from "./parser";
 
 export function loadConfig(): Config {
 	const config: unknown = JSON.parse(readFileSync("sccConfig.json", "utf8"));
@@ -55,11 +47,7 @@ export function convertUCToTXT(inputPath: string, outputPath: string): void {
 	safeWriteFileSync(outputPath, txt, "utf8");
 }
 
-function safeWriteFileSync(
-	path: string,
-	data: string,
-	options?: WriteFileOptions,
-) {
+function safeWriteFileSync(path: string, data: string, options?: WriteFileOptions) {
 	try {
 		const dir = dirname(path);
 		mkdirSync(dir, { recursive: true });
@@ -70,9 +58,5 @@ function safeWriteFileSync(
 }
 
 function isValidDefsLength(defs: string[]): boolean {
-	return (
-		defs.length === GameLength.Long ||
-		defs.length === GameLength.Medium ||
-		defs.length === GameLength.Short
-	);
+	return defs.length === GameLength.Long || defs.length === GameLength.Medium || defs.length === GameLength.Short;
 }

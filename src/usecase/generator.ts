@@ -1,15 +1,13 @@
-export function generateUCFile(
-	defs: string[],
-	className: string,
-	date?: string,
-	author?: string,
-): string {
+import { GameLength } from "../domain/GameLength";
+
+export function generateUCFile(defs: string[], className: string, date?: string, author?: string): string {
 	const publishedDate = date || getTodayString();
+	const functionName = decideFunctionName(defs.length);
 	const lines = [
 		`class ${className} extends CD_SpawnCycle_PresetBase`,
 		"\timplements (CD_SpawnCycle_Preset);",
 		"",
-		"function GetLongSpawnCycleDefs( out array<string> sink ){",
+		`function ${functionName}( out array<string> sink ){`,
 		"\tlocal int i;",
 		"",
 		"\ti = 0;",
@@ -62,4 +60,21 @@ function convertDefsToSinkAssignments(defs: string[]): string[] {
 			.join(" $ ");
 		return `\tsink[i++] = ${joinedChunks};`;
 	});
+}
+
+export function decideFunctionName(length: number): string {
+	switch (length) {
+		case GameLength.Long: {
+			return "GetLongSpawnCycleDefs";
+		}
+		case GameLength.Medium: {
+			return "GetMediumSpawnCycleDefs";
+		}
+		case GameLength.Short: {
+			return "GetShortSpawnCycleDefs";
+		}
+		default: {
+			throw new Error(`Invalid length: ${length}`);
+		}
+	}
 }
