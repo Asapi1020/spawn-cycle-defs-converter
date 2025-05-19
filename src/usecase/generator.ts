@@ -16,7 +16,7 @@ export function generateUCFile(
 		"\tsink.length = 0;",
 		`\tsink.length = ${defs.length};`,
 		"",
-		...defs.map((item) => `\tsink[i++] = "${item}";`),
+		...convertDefsToSinkAssignments(defs),
 		"}",
 		"",
 		"function string GetDate(){",
@@ -42,4 +42,24 @@ function getTodayString(): string {
 	const mm = String(today.getMonth() + 1).padStart(2, "0");
 	const dd = String(today.getDate()).padStart(2, "0");
 	return `${yyyy}-${mm}-${dd}`;
+}
+
+function splitLiteral(value: string, maxLength = 1000): string[] {
+	const split: string[] = [];
+	for (let i = 0; i < value.length; i += maxLength) {
+		split.push(value.substring(i, i + maxLength));
+	}
+	return split;
+}
+
+function convertDefsToSinkAssignments(defs: string[]): string[] {
+	return defs.map((def) => {
+		const chunks = splitLiteral(def);
+		const joinedChunks = chunks
+			.map((chunk) => {
+				return `"${chunk}"`;
+			})
+			.join(" $ ");
+		return `\tsink[i++] = ${joinedChunks};`;
+	});
 }

@@ -7,7 +7,32 @@ export function parseSpawnCycleDefsFromTXTFile(content: string): string[] {
 }
 
 export function parseSpawnCycleDefsFromUCFile(content: string): string[] {
-	return [...content.matchAll(/sink\[i\+\+\]\s*=\s*"([^"]+)"/g)].map(
-		(m) => m[1],
-	);
+	const lines = content.split(/\r?\n/);
+	const defs: string[] = [];
+
+	let collecting = false;
+	let buffer = "";
+
+	for (const line of lines) {
+		const trimmed = line.trim();
+
+		if (!collecting && trimmed.startsWith("sink[i++]")) {
+			buffer = trimmed;
+			collecting = !trimmed.endsWith(";");
+		} else if (collecting) {
+			buffer += trimmed;
+			collecting = !trimmed.endsWith(";");
+		}
+
+		if (!collecting && buffer !== "") {
+			const def =
+				buffer
+					.match(/"([^"]*)"/g)
+					?.map((s) => s.slice(1, -1))
+					.join("") ?? "";
+			defs.push(def);
+			buffer = "";
+		}
+	}
+	return defs;
 }
