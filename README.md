@@ -2,6 +2,12 @@
 
 A tool to convert spawn cycle data from one format to another.
 
+## install
+
+```sh
+pnpm i -D @asp1020/spawn-cycle-converter
+```
+
 ## TXT to UC
 
 ```sh
