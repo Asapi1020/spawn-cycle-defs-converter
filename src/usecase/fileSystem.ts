@@ -54,6 +54,7 @@ function safeWriteFileSync(path: string, data: string, options?: WriteFileOption
 		writeFileSync(path, data, options);
 	} catch (error) {
 		console.error(`Error writing file ${path}:`, error);
+		throw error;
 	}
 }
 

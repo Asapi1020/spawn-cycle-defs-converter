@@ -1,5 +1,5 @@
 {
-  "name": "spawn-cycle-converter",
+  "name": "@asp1020/spawn-cycle-converter",
   "version": "1.0.0",
   "description": "A tool to convert spawn cycle data from one format to another.",
   "main": "dist/index.js",

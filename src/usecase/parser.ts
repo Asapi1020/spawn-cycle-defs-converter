@@ -25,6 +25,8 @@ export function parseSpawnCycleDefsFromUCFile(content: string): string[] {
 		}
 
 		if (!collecting && buffer !== "") {
+			// definition is sometimes split into multiple literal like `"1CY_2AL*," $ "2FP_2HU"`
+			// because of the limit of the length for unreal script
 			const def =
 				buffer
 					.match(/"([^"]*)"/g)
