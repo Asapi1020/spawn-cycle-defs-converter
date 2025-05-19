@@ -1,0 +1,5 @@
+{
+  "txtDir": "./sample-txt",
+  "ucDir": "./sample-uc",
+  "combinedClassNameStyle": true
+}
