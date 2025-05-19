@@ -7,7 +7,7 @@ export function parseSpawnCycleDefsFromTXTFile(content: string): string[] {
 }
 
 export function parseSpawnCycleDefsFromUCFile(content: string): string[] {
-	const lines = content.split(/\r?\n/);
+	const lines = content.split(/\r\n|\n|\r/);
 	const defs: string[] = [];
 
 	let collecting = false;
