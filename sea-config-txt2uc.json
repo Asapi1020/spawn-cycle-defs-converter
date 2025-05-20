@@ -1,0 +1,5 @@
+{
+  "main": "./bin/txt2uc.cjs",
+  "output": "./blob/txt2uc.blob",
+  "disableExperimentalSEAWarning": true
+}
