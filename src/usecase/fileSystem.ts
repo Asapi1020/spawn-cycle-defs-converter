@@ -47,7 +47,7 @@ export function convertUCToTXT(inputPath: string, outputPath: string): void {
 	safeWriteFileSync(outputPath, txt, "utf8");
 }
 
-function safeWriteFileSync(path: string, data: string, options?: WriteFileOptions) {
+function safeWriteFileSync(path: string, data: string, options?: WriteFileOptions): void {
 	try {
 		const dir = dirname(path);
 		mkdirSync(dir, { recursive: true });
